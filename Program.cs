@@ -15,14 +15,14 @@ try
         .MinimumLevel.Debug()
         .WriteTo.Console()
         .ReadFrom.Configuration(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build())
-        //.WriteTo.Seq("http://localhost:5341", apiKey: "3UQijf9hnD8Apq5KsXJb")
         .CreateLogger();
 
     Log.Information("Start hosting");
 
     var builder = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
     {
-        services.AddSingleton<IReaderService, ReaderService>();
+        services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
+        services.AddSingleton<IDbReaderService, PotgreeReaderService>();
         services.AddSerilog();
         services.AddQuartz();
         services.AddQuartzHostedService(opt =>

@@ -2,5 +2,5 @@ namespace DelayedDataLoading;
 
 internal interface IDbReaderService
 {
-    Task ReadDataAsync();
+    Task ReadDataAsync(string command, string parameters);
 }
