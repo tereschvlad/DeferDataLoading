@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quartz;
+using System.Text.Json;
 
 namespace DelayedDataLoading;
 
@@ -18,7 +19,9 @@ internal class GeneralJob : IJob
     {
         try
         {
-            await _dbReaderService.ReadDataAsync("SELECT * FROM example_table", string.Empty);
+            var dictParams = JsonSerializer.Deserialize<Dictionary<string, string>>("{\"Id\": \"1\"}");
+
+            await _dbReaderService.ReadDataAsync("SELECT * FROM example_table WHERE Id = @Id", dictParams);
         }
         catch (Exception ex)
         {

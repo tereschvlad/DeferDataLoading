@@ -42,7 +42,7 @@ try
     .StartNow()
     .WithSimpleSchedule(x =>
     {
-        x.WithIntervalInSeconds(10).RepeatForever();
+        x.WithIntervalInSeconds(180).RepeatForever();
     }).Build();
 
     await scheduler.ScheduleJob(job, trigger);
