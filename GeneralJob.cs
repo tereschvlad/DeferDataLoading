@@ -19,9 +19,23 @@ internal class GeneralJob : IJob
     {
         try
         {
-            var dictParams = JsonSerializer.Deserialize<Dictionary<string, string>>("{\"Id\": \"1\"}");
+            #region Test code, creating json from RequestDataModel
 
-            await _dbReaderService.ReadDataAsync("SELECT * FROM example_table WHERE Id = @Id", dictParams);
+            var prms = new RequestDataModel
+            {
+                Request = "SELECT * FROM example_table WHERE Id = @Id",
+                Parameters = new Dictionary<string, object>
+                {
+                    { "Id", 1 }
+                }
+            };
+
+            var json = JsonSerializer.Serialize(prms);
+
+            #endregion
+
+            var deserializedPrms = JsonSerializer.Deserialize<RequestDataModel>(json);
+            var list = await _dbReaderService.ReadDataAsync(prms.Request, prms.Parameters);
         }
         catch (Exception ex)
         {

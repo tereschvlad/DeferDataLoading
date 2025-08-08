@@ -17,27 +17,22 @@ internal class PotgreeReaderService : IDbReaderService
     }
 
 
-    public async Task ReadDataAsync(string command, Dictionary<string, string> dictParams)
+    public async Task<IEnumerable<object>> ReadDataAsync(string command, Dictionary<string, object> dictParams)
     {
         try
         {
             using (var connection = new NpgsqlConnection(_connectionDataOption.DbConnection))
             {
-                var t2 = new Dictionary<string, object>()
-                {
-                    { "Id", 1}
-                };
+                var parameters = new DynamicParameters(dictParams);
 
-                var parameters = new DynamicParameters(t2);
-
-                var t1 = await connection.QueryAsync(command, parameters);
-
-                
+                return await connection.QueryAsync(command, parameters);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "DbRequest error");
         }
+
+        return Enumerable.Empty<object>();
     }
 }

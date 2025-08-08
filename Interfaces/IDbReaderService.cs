@@ -2,5 +2,5 @@ namespace DelayedDataLoading;
 
 internal interface IDbReaderService
 {
-    Task ReadDataAsync(string command, Dictionary<string, string> dictParams);
+    Task<IEnumerable<object>> ReadDataAsync(string command, Dictionary<string, object> dictParams);
 }
