@@ -23,6 +23,7 @@ try
     {
         services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
         services.AddSingleton<IDbReaderService, PotgreeReaderService>();
+        services.AddSingleton<IReaderService, ReaderService>();
         services.AddSerilog();
         services.AddQuartz();
         services.AddQuartzHostedService(opt =>
