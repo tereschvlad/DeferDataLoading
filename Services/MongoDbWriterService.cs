@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace DelayedDataLoading;
 
@@ -10,8 +11,18 @@ internal class MongoDbWriterService : IMongoDbWriterService
         _logger = logger;
     }
 
-    public async Task WriteDataAsync()
+    public async Task WriteDataAsync(ResultRequestDataModel data)
     {
+        try
+        {
+            var client = new MongoClient("mongodb://test:test@localhost:27017/");
+            var database = client.GetDatabase("DelayedDataLoading");
 
+            
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error writing data to MongoDB");
+        }
     }
 }

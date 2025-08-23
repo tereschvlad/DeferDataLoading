@@ -2,5 +2,5 @@ namespace DelayedDataLoading;
 
 internal interface IMongoDbWriterService
 {
-    Task WriteDataAsync();
+    Task WriteDataAsync(ResultRequestDataModel data);
 }
