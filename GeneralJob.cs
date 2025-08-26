@@ -8,15 +8,16 @@ namespace DelayedDataLoading;
 internal class GeneralJob : IJob
 {
     private readonly ILogger<GeneralJob> _logger;
-    private readonly IDbReaderService _dbReaderService;
-
     private readonly IReaderService _readerService;
 
-    public GeneralJob(ILogger<GeneralJob> logger, IDbReaderService dbReaderService, IReaderService readerService)
+    private readonly IMongoDbWriterService _mongoDbWriterService;
+
+    public GeneralJob(ILogger<GeneralJob> logger, IReaderService readerService, IMongoDbWriterService mongoDbWriterService)
     {
         _logger = logger;
-        _dbReaderService = dbReaderService;
         _readerService = readerService;
+
+        _mongoDbWriterService = mongoDbWriterService;
     }
 
     public async Task Execute(IJobExecutionContext context)

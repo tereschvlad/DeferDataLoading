@@ -1,3 +1,5 @@
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace DelayedDataLoading;
 
 internal class RequestDataModel
@@ -9,6 +11,9 @@ internal class RequestDataModel
     public string Application { get; set; }
 
     public string UserName { get; set; }
+
+    [BsonIgnore]
+    public string MongoCollectionName { get; set; }
 
 }
 

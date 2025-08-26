@@ -8,11 +8,15 @@ internal class ReaderService : IReaderService
 {
     private readonly ILogger<ReaderService> _logger;
     private readonly IDbReaderService _dbReaderService;
+    private readonly IMongoDbWriterService _mongoDbService;
+
     public ReaderService(ILogger<ReaderService> logger,
-        IDbReaderService dbReaderService)
+        IDbReaderService dbReaderService,
+        IMongoDbWriterService mongoDbService)
     {
         _logger = logger;
         _dbReaderService = dbReaderService;
+        _mongoDbService = mongoDbService;
     }
 
     public async Task ReadDataAsync()
@@ -32,7 +36,10 @@ internal class ReaderService : IReaderService
                     var body = message.Body.ToArray();
                     var msg = System.Text.Encoding.UTF8.GetString(body);
 
-                    var requestData = JsonSerializer.Deserialize<RequestDataModel>(msg);
+                    var requestData = JsonSerializer.Deserialize<RequestDataModel>(msg, new JsonSerializerOptions
+                    {
+                        
+                    });
 
                     var data = await _dbReaderService.ReadDataAsync(requestData.Request, requestData.Parameters);
 
@@ -46,7 +53,7 @@ internal class ReaderService : IReaderService
                         UserName = requestData.UserName
                     };
 
-                    
+                    await _mongoDbService.WriteDataAsync(resultRequestData);
 
                     await channel.BasicAckAsync(message.DeliveryTag, false);
                 }

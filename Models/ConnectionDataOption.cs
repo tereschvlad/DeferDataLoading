@@ -2,5 +2,9 @@ namespace DelayedDataLoading;
 
 internal class ConnectionDataOption
 {
-    public string DbConnection { get; set; }
+    public string PostgreeDbConnection { get; set; }
+
+    public string MongoDbConnection { get; set; }
+
+    public string MongoDbName { get; set; }
 }

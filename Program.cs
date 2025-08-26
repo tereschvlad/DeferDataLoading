@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using Quartz;
 using Serilog;
 
@@ -24,6 +26,14 @@ try
         services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
         services.AddSingleton<IDbReaderService, PotgreeReaderService>();
         services.AddSingleton<IReaderService, ReaderService>();
+        services.AddSingleton<IMongoDbWriterService, MongoDbWriterService>();
+        services.AddSingleton<IMongoDatabase>(serviceProvider =>
+        {
+            var config = serviceProvider.GetRequiredService<IOptions<ConnectionDataOption>>();
+
+            var client = new MongoClient(config.Value.MongoDbConnection);
+            return client.GetDatabase(config.Value.MongoDbName);
+        });
         services.AddSerilog();
         services.AddQuartz();
         services.AddQuartzHostedService(opt =>
