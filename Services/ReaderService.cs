@@ -36,10 +36,7 @@ internal class ReaderService : IReaderService
                     var body = message.Body.ToArray();
                     var msg = System.Text.Encoding.UTF8.GetString(body);
 
-                    var requestData = JsonSerializer.Deserialize<RequestDataModel>(msg, new JsonSerializerOptions
-                    {
-                        
-                    });
+                    var requestData = JsonSerializer.Deserialize<RequestDataModel>(msg);
 
                     var data = await _dbReaderService.ReadDataAsync(requestData.Request, requestData.Parameters);
 
@@ -47,10 +44,11 @@ internal class ReaderService : IReaderService
                     {
                         Request = requestData.Request,
                         Parameters = requestData.Parameters,
-                        Result = data,
+                        ResultJson = JsonSerializer.Serialize(data),
                         CreateDate = DateTime.UtcNow,
                         Application = requestData.Application,
-                        UserName = requestData.UserName
+                        UserName = requestData.UserName,
+                        MongoCollectionName = requestData.MongoCollectionName
                     };
 
                     await _mongoDbService.WriteDataAsync(resultRequestData);

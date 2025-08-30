@@ -25,7 +25,7 @@ internal class PotgreeReaderService : IDbReaderService
             {
                 var parameters = new DynamicParameters(dictParams);
 
-                return await connection.QueryAsync(command, parameters);
+                return await connection.QueryAsync<object>(command, parameters);
             }
         }
         catch (Exception ex)
