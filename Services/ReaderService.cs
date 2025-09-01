@@ -45,6 +45,7 @@ internal class ReaderService : IReaderService
                         Request = requestData.Request,
                         Parameters = requestData.Parameters,
                         ResultJson = JsonSerializer.Serialize(data),
+
                         CreateDate = DateTime.UtcNow,
                         Application = requestData.Application,
                         UserName = requestData.UserName,
