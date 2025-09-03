@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
 namespace DelayedDataLoading;
@@ -9,14 +10,17 @@ internal class ReaderService : IReaderService
     private readonly ILogger<ReaderService> _logger;
     private readonly IDbReaderService _dbReaderService;
     private readonly IMongoDbWriterService _mongoDbService;
+    private readonly ConnectionDataOption _connectionDataOption;
 
     public ReaderService(ILogger<ReaderService> logger,
         IDbReaderService dbReaderService,
-        IMongoDbWriterService mongoDbService)
+        IMongoDbWriterService mongoDbService, 
+        IOptions<ConnectionDataOption> connectionDataOption)
     {
         _logger = logger;
         _dbReaderService = dbReaderService;
         _mongoDbService = mongoDbService;
+        _connectionDataOption = connectionDataOption.Value;
     }
 
     public async Task ReadDataAsync()
@@ -28,7 +32,7 @@ internal class ReaderService : IReaderService
             using var connection = await factory.CreateConnectionAsync();
             using var channel = await connection.CreateChannelAsync();
 
-            var message = await channel.BasicGetAsync("postgree_queue", false);
+            var message = await channel.BasicGetAsync(_connectionDataOption.QueueName, false);
             while (message != null)
             {
                 try
@@ -62,7 +66,7 @@ internal class ReaderService : IReaderService
                     await channel.BasicNackAsync(message.DeliveryTag, false, false);
                 }
 
-                message = await channel.BasicGetAsync("postgree_queue", false);
+                message = await channel.BasicGetAsync(_connectionDataOption.QueueName, false);
             }
         }
         catch (Exception ex)

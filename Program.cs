@@ -1,4 +1,5 @@
 ﻿using DelayedDataLoading;
+using DelayedDataLoading.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,8 +24,27 @@ try
 
     var builder = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
     {
+        var dbName = "oracle";
+
         services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
-        services.AddSingleton<IDbReaderService, PotgreeReaderService>();
+
+
+        switch (dbName)
+        {
+            case "postgree":
+                services.AddSingleton<IDbReaderService, PotgreeReaderService>();
+                break;
+            case "mysql":
+                services.AddSingleton<IDbReaderService, MySqlReaderService>();
+                break;
+            case "oracle":
+                services.AddSingleton<IDbReaderService, OracleReaderService>();
+                break;
+            case "mssql":
+                services.AddSingleton<IDbReaderService, MSSqlReaderService>();
+                break;
+        }
+
         services.AddSingleton<IReaderService, ReaderService>();
         services.AddSingleton<IMongoDbWriterService, MongoDbWriterService>();
         services.AddSingleton<IMongoDatabase>(serviceProvider =>

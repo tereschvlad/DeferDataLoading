@@ -19,7 +19,7 @@ namespace DelayedDataLoading.Services
         {
             try
             {
-                using (var connection = new OracleConnection(_connectionDataOption.PostgreeDbConnection))
+                using (var connection = new OracleConnection(_connectionDataOption.OracleDbConnection))
                 {
                     var parameters = new DynamicParameters(dictParams);
 
