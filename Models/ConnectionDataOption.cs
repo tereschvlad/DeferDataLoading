@@ -6,9 +6,11 @@ internal class ConnectionDataOption
 
     public string OracleDbConnection { get; set; }
 
+    public string MySqlConnection { get; set; }
+
+    public string MsSqlConnection { get; set; }
+
     public string MongoDbConnection { get; set; }
 
     public string MongoDbName { get; set; }
-
-    public string QueueName { get; set; }
 }

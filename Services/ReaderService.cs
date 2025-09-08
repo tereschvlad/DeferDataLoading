@@ -32,7 +32,14 @@ internal class ReaderService : IReaderService
             using var connection = await factory.CreateConnectionAsync();
             using var channel = await connection.CreateChannelAsync();
 
-            var message = await channel.BasicGetAsync(_connectionDataOption.QueueName, false);
+            string queueName = string.Empty;
+
+            queueName = "postgree_queue";
+            //queueName = "oracle_queue";
+            //queueName = "mysql_queue";
+            //queueName = "mssql_queue";
+
+            var message = await channel.BasicGetAsync(queueName, false);
             while (message != null)
             {
                 try
@@ -49,7 +56,6 @@ internal class ReaderService : IReaderService
                         Request = requestData.Request,
                         Parameters = requestData.Parameters,
                         ResultJson = JsonSerializer.Serialize(data),
-
                         CreateDate = DateTime.UtcNow,
                         Application = requestData.Application,
                         UserName = requestData.UserName,
@@ -66,7 +72,7 @@ internal class ReaderService : IReaderService
                     await channel.BasicNackAsync(message.DeliveryTag, false, false);
                 }
 
-                message = await channel.BasicGetAsync(_connectionDataOption.QueueName, false);
+                message = await channel.BasicGetAsync(queueName, false);
             }
         }
         catch (Exception ex)
