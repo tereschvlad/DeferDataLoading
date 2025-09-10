@@ -22,7 +22,7 @@ namespace DelayedDataLoading.Services
         }
 
 
-        public async Task<IEnumerable<object>> ReadDataAsync(string command, Dictionary<string, object> dictParams)
+        public async Task<IEnumerable<dynamic>> ReadDataAsync(string command, Dictionary<string, object> dictParams)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace DelayedDataLoading.Services
                 {
                     var parameters = new DynamicParameters(dictParams);
 
-                    return await connection.QueryAsync<object>(command, parameters);
+                    return await connection.QueryAsync(command, parameters);
                 }
             }
             catch (Exception ex)
@@ -38,7 +38,7 @@ namespace DelayedDataLoading.Services
                 _logger.LogError(ex, "DbRequest error");
             }
 
-            return Enumerable.Empty<object>();
+            return Enumerable.Empty<dynamic>();
         }
     }
 }

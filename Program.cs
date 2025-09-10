@@ -24,7 +24,7 @@ try
 
     var builder = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
     {
-        var dbName = "oracle";
+        var dbName = "postgree";
 
         services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
 

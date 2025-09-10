@@ -1,6 +1,9 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using RabbitMQ.Client;
 
 namespace DelayedDataLoading;
@@ -49,13 +52,21 @@ internal class ReaderService : IReaderService
 
                     var requestData = JsonSerializer.Deserialize<RequestDataModel>(msg);
 
-                    var data = await _dbReaderService.ReadDataAsync(requestData.Request, requestData.Parameters);
+                    var rows = await _dbReaderService.ReadDataAsync(requestData.Request, requestData.Parameters);
+                    IEnumerable<BsonDocument> docs = rows.Select(x =>
+                    {
+                        var dict = (IDictionary<string, object>)x;
+
+                        var json = JsonSerializer.Serialize(dict);
+                        return BsonSerializer.Deserialize<BsonDocument>(json);
+                    });
 
                     var resultRequestData = new ResultRequestDataModel
                     {
                         Request = requestData.Request,
                         Parameters = requestData.Parameters,
-                        ResultJson = JsonSerializer.Serialize(data),
+                        ResultJson = JsonSerializer.Serialize(rows),
+                        Rows = docs,
                         CreateDate = DateTime.UtcNow,
                         Application = requestData.Application,
                         UserName = requestData.UserName,
