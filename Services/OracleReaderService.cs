@@ -19,7 +19,7 @@ namespace DelayedDataLoading.Services
         {
             try
             {
-                using (var connection = new OracleConnection(_connectionDataOption.OracleDbConnection))
+                using (var connection = new OracleConnection(_connectionDataOption.DbConnection))
                 {
                     var parameters = new DynamicParameters(dictParams);
 

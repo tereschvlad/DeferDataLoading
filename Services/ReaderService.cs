@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
 using RabbitMQ.Client;
 
 namespace DelayedDataLoading;
@@ -30,19 +29,18 @@ internal class ReaderService : IReaderService
     {
         try
         {
-            var factory = new ConnectionFactory() { HostName = "localhost", Port = 5672, Password = "test", UserName = "test" };
+            var factory = new ConnectionFactory() 
+            { 
+                HostName = _connectionDataOption.RabbitMqHostName, 
+                Port = _connectionDataOption.RabbitMqPort, 
+                Password = _connectionDataOption.RabbitMqPassword, 
+                UserName = _connectionDataOption.RabbitMqUserName
+            };
 
             using var connection = await factory.CreateConnectionAsync();
             using var channel = await connection.CreateChannelAsync();
 
-            string queueName = string.Empty;
-
-            queueName = "postgree_queue";
-            //queueName = "oracle_queue";
-            //queueName = "mysql_queue";
-            //queueName = "mssql_queue";
-
-            var message = await channel.BasicGetAsync(queueName, false);
+            var message = await channel.BasicGetAsync(_connectionDataOption.QueueName, false);
             while (message != null)
             {
                 try
@@ -65,7 +63,6 @@ internal class ReaderService : IReaderService
                     {
                         Request = requestData.Request,
                         Parameters = requestData.Parameters,
-                        ResultJson = JsonSerializer.Serialize(rows),
                         Rows = docs,
                         CreateDate = DateTime.UtcNow,
                         Application = requestData.Application,
@@ -83,7 +80,7 @@ internal class ReaderService : IReaderService
                     await channel.BasicNackAsync(message.DeliveryTag, false, false);
                 }
 
-                message = await channel.BasicGetAsync(queueName, false);
+                message = await channel.BasicGetAsync(_connectionDataOption.QueueName, false);
             }
         }
         catch (Exception ex)

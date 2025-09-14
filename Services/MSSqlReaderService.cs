@@ -19,7 +19,7 @@ namespace DelayedDataLoading.Services
         {
             try
             {
-                using (var connection = new SqlConnection(_connectionDataOption.PostgreeDbConnection))
+                using (var connection = new SqlConnection(_connectionDataOption.DbConnection))
                 {
                     var parameters = new DynamicParameters(dictParams);
 

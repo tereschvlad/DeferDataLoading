@@ -21,7 +21,7 @@ internal class PotgreeReaderService : IDbReaderService
     {
         try
         {
-            using (var connection = new NpgsqlConnection(_connectionDataOption.PostgreeDbConnection))
+            using (var connection = new NpgsqlConnection(_connectionDataOption.DbConnection))
             {
                 var parameters = new DynamicParameters(dictParams);
 

@@ -49,7 +49,7 @@ public class DictionaryStringObjectJsonConverter : JsonConverter<Dictionary<stri
         return dictionary; 
     }
 
-    private object? ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
+    private object ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
     {
         switch (reader.TokenType)
         {

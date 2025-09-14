@@ -26,7 +26,7 @@ namespace DelayedDataLoading.Services
         {
             try
             {
-                using (var connection = new MySqlConnection(_connectionDataOption.PostgreeDbConnection))
+                using (var connection = new MySqlConnection(_connectionDataOption.DbConnection))
                 {
                     var parameters = new DynamicParameters(dictParams);
 

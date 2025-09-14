@@ -12,6 +12,7 @@ try
 {
     var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
     .Build();
 
     Log.Logger = new LoggerConfiguration()
@@ -24,12 +25,11 @@ try
 
     var builder = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
     {
-        var dbName = "postgree";
-
         services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
 
+        var config = context.Configuration.GetSection("Connections").Get<ConnectionDataOption>();
 
-        switch (dbName)
+        switch (config.DbName)
         {
             case "postgree":
                 services.AddSingleton<IDbReaderService, PotgreeReaderService>();
@@ -49,10 +49,8 @@ try
         services.AddSingleton<IMongoDbWriterService, MongoDbWriterService>();
         services.AddSingleton<IMongoDatabase>(serviceProvider =>
         {
-            var config = serviceProvider.GetRequiredService<IOptions<ConnectionDataOption>>();
-
-            var client = new MongoClient(config.Value.MongoDbConnection);
-            return client.GetDatabase(config.Value.MongoDbName);
+            var client = new MongoClient(config.MongoDbConnection);
+            return client.GetDatabase(config.MongoDbName);
         });
         services.AddSerilog();
         services.AddQuartz();
