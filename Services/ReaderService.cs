@@ -67,6 +67,7 @@ internal class ReaderService : IReaderService
                         CreateDate = DateTime.UtcNow,
                         Application = requestData.Application,
                         UserName = requestData.UserName,
+                        RequestName = requestData.RequestName,
                         MongoCollectionName = requestData.MongoCollectionName
                     };
 

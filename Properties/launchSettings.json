@@ -3,11 +3,11 @@
     "DelayedDataLoading": {
       "commandName": "Project",
       "environmentVariables": {
-        "Connections__DbName": "oracle",
+        "Connections__DbName": "postgree",
         "Connections__DbConnection": "Server=localhost;Port=5432;Database=mydatabase;User Id=test;Password=1234;",
         "Connections__MongoDbConnection": "mongodb://test:test@localhost:27017/",
         "Connections__MongoDbName": "DelayedDataLoading",
-        "Connections__QueueName": "oracle_queue",
+        "Connections__QueueName": "postgree_queue",
         "Connections__RabbitMqHostName": "localhost",
         "Connections__RabbitMqPort": "5672",
         "Connections__RabbitMqUserName": "test",
