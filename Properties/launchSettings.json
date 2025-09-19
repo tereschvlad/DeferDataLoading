@@ -14,6 +14,9 @@
         "Connections__RabbitMqPassword": "test"
       },
       "remoteDebugEnabled": true
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
     }
   }
 }
