@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using RabbitMQ.Client;
+using Serilog;
 
 namespace DelayedDataLoading;
 
@@ -50,7 +51,12 @@ internal class ReaderService : IReaderService
 
                     var requestData = JsonSerializer.Deserialize<RequestDataModel>(msg);
 
+                    _logger.LogInformation("Doing request {RequestName} application {Application}", requestData.RequestName, requestData.Application);
+
                     var rows = await _dbReaderService.ReadDataAsync(requestData.Request, requestData.Parameters);
+                    
+                    _logger.LogInformation("Get {Count} rows.", rows.Count());
+
                     IEnumerable<BsonDocument> docs = rows.Select(x =>
                     {
                         var dict = (IDictionary<string, object>)x;
@@ -72,6 +78,8 @@ internal class ReaderService : IReaderService
                     };
 
                     await _mongoDbService.WriteDataAsync(resultRequestData);
+
+                    _logger.LogInformation("Writed into mongodb {MongoCollectionName}.", resultRequestData.MongoCollectionName);
 
                     await channel.BasicAckAsync(message.DeliveryTag, false);
                 }

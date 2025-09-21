@@ -3,10 +3,10 @@ using DelayedDataLoading.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Quartz;
 using Serilog;
+using Serilog.Events;
 
 try
 {
@@ -18,7 +18,6 @@ try
     Log.Logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
         .WriteTo.Console()
-        .ReadFrom.Configuration(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build())
         .CreateLogger();
 
     Log.Information("Start hosting");
@@ -52,7 +51,14 @@ try
             var client = new MongoClient(config.MongoDbConnection);
             return client.GetDatabase(config.MongoDbName);
         });
-        services.AddSerilog();
+
+        services.AddSerilog((serviceProv, logConf) =>
+        {
+            logConf.WriteTo.Console()
+                   .WriteTo.Seq(config.SeqHost, apiKey: config.SeqKey, 
+                                restrictedToMinimumLevel: LogEventLevel.Information);
+        });
+
         services.AddQuartz();
         services.AddQuartzHostedService(opt =>
         {
@@ -71,7 +77,7 @@ try
     .StartNow()
     .WithSimpleSchedule(x =>
     {
-        x.WithIntervalInSeconds(180).RepeatForever();
+        x.WithIntervalInSeconds(10).RepeatForever();
     }).Build();
 
     await scheduler.ScheduleJob(job, trigger);

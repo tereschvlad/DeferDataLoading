@@ -20,4 +20,8 @@ internal class ConnectionDataOption
 
     public string RabbitMqPassword { get; set; }
 
+    public string SeqKey { get; set; }
+
+    public string SeqHost { get; set; }
+
 }
