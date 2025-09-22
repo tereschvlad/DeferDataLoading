@@ -75,10 +75,7 @@ try
 
     var trigger = TriggerBuilder.Create()
     .StartNow()
-    .WithSimpleSchedule(x =>
-    {
-        x.WithIntervalInSeconds(10).RepeatForever();
-    }).Build();
+    .WithSimpleSchedule(x => x.WithIntervalInSeconds(10).RepeatForever()).Build();
 
     await scheduler.ScheduleJob(job, trigger);
 
