@@ -9,7 +9,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DelayedDataLoading/DelayedDataLoading.csproj", "DelayedDataLoading/"]
+COPY ["DelayedDataLoading.csproj", "DelayedDataLoading/"]
 RUN dotnet restore "./DelayedDataLoading/DelayedDataLoading.csproj"
 COPY . .
 WORKDIR "/src/DelayedDataLoading"
