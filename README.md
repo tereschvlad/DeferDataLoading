@@ -5,11 +5,10 @@ Defering the execution of the Db query using RabbitMq for saving and performing 
 DeferDataLoading it is only application which works with other services as RabbitMq, MongoDb and some types of databases as Oracle, PostgreSQL, MySql and MSSQL. The application only read data about query from queue and perform it. After this the result save into mongodb. MongoDb using as storage for saving results. It allows defer performing queries and simplifying working with results. 
 
 # Why it was created?
-
-This project was created for simplifying working with difficalt queries and unificied interface for working with this types of queries. Application gives tools for defering processing of query and after get a result to work with it.
+This project was created for simplifying work with diffcult query for db and for unificate proccess of working queries which performed remotely.
 
 # How it works?
-You need to have this application for work, you need also RabbitMq and MongoDb. Loging system which are used [Seq](https://datalust.co/), so you should have it too. An equally important element is database. Application suport only PostgreSQL, MSSQL, MySql and Oracle. For start this application RabbitMq with queue has already exist MongoDb should be exist too. 
+Need to start not only this application. Need also database (the project support PostgreSQL, Oracle, MSSQL, MySql), MongoDb, RabbitMq and Seq (for work with logs). In rabbitmq should be already exist queues where will be save datas for queries (json type for saving show lower). Also need to have mongodb with collection where will save a result. Also exist opportunity to create several conteiners which will be perform queries for differents databases.
 
 ## Example of data for RabbitMq 
 ``` json
@@ -85,7 +84,7 @@ networks:
     name: test-network   
 ```
 
-## Exa,ple of bash script
+## Example of bash script
 ``` bash
 docker run -d \
   --name test-network \
@@ -105,7 +104,7 @@ docker run -d \
   vladteresch/deferdataloading:latest
 ```
 
-- Connections__DbName - name of database which you connect
+- Connections__DbName - name of database which you connect (exist variants: postgree, mysql, oracle, mssql)
 - Connections__DbConnection - connection string for database
 - Connections__MongoDbConnection - connection string for mongodb
 - Connections__MongoDbName - comgodb collection name
@@ -120,5 +119,5 @@ docker run -d \
 
 
 ## More information how work with it
-[Link for image in dockerhub](https://hub.docker.com/r/vladteresch/deferdataloading) 
+[Link for dockerhub](https://hub.docker.com/r/vladteresch/deferdataloading) 
 
