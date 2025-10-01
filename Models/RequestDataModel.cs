@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 internal class RequestDataModel
 {

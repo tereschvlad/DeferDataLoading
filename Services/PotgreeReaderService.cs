@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Dapper;
 using Npgsql;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 internal class PotgreeReaderService : IDbReaderService
 {

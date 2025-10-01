@@ -6,7 +6,7 @@ using MongoDB.Bson.Serialization;
 using RabbitMQ.Client;
 using Serilog;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 internal class ReaderService : IReaderService
 {

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 internal class MongoDbWriterService : IMongoDbWriterService
 {

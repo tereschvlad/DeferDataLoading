@@ -1,5 +1,5 @@
-﻿using DelayedDataLoading;
-using DelayedDataLoading.Services;
+﻿using DeferDataLoading;
+using DeferDataLoading.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,7 +33,7 @@ try
 
         switch (config.DbName)
         {
-            case "PostgeSql":
+            case "PostgreSql":
                 services.AddSingleton<IDbReaderService, PotgreeReaderService>();
                 break;
             case "MySql":
@@ -52,7 +52,7 @@ try
         services.AddSingleton<IMongoDatabase>(serviceProvider =>
         {
             var client = new MongoClient(config.MongoDbConnection);
-            return client.GetDatabase(config.MongoDbCollection);
+            return client.GetDatabase(config.MongoDbName);
         });
 
         services.AddSerilog((serviceProv, logConf) =>

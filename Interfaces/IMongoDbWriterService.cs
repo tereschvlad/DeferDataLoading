@@ -1,4 +1,4 @@
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 internal interface IMongoDbWriterService
 {

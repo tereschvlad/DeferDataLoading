@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 public class DictionaryStringObjectJsonConverter : JsonConverter<Dictionary<string, object>>
 {

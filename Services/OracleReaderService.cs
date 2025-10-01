@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Oracle.ManagedDataAccess.Client;
 
-namespace DelayedDataLoading.Services
+namespace DeferDataLoading.Services
 {
     internal class OracleReaderService : IDbReaderService
     {

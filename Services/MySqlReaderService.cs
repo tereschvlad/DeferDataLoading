@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 using Npgsql;
 
-namespace DelayedDataLoading.Services
+namespace DeferDataLoading.Services
 {
     internal class MySqlReaderService : IDbReaderService
     {

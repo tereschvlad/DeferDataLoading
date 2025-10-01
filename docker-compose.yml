@@ -8,7 +8,7 @@ services:
       - Connections__DbName=PostgreSql
       - "Connections__DbConnection=Host=postgres;Database=mydatabase;Username=test_user;Password=test_password"
       - "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017"
-      - Connections__MongoDbCollection=MongoDb_collection_name
+      - Connections__MongoDbName=MongoDbName
       - Connections__RabbitMqHostName=rabbitmq
       - Connections__RabbitMqPort=5672
       - Connections__RabbitMqUser=test

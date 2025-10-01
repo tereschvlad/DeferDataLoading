@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace DelayedDataLoading.Services
+namespace DeferDataLoading.Services
 {
     internal class MSSqlReaderService : IDbReaderService
     {

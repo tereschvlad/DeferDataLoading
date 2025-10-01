@@ -2,7 +2,7 @@
 using Quartz;
 using System.Text.Json;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 [DisallowConcurrentExecution]
 internal class GeneralJob : IJob

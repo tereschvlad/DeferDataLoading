@@ -1,6 +1,6 @@
 using MongoDB.Bson;
 
-namespace DelayedDataLoading;
+namespace DeferDataLoading;
 
 internal class ResultRequestDataModel : RequestDataModel
 {
