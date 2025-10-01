@@ -41,28 +41,26 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 ## Example of data result in MongoDb
 ``` json
 {
-  // Query which was caried
   "Request": "select name, age, salary from test_table",
-  // Parameters for query
   "Parameters": [
-
   ],
-  // Name of query for simplify finding in mongodb collection
   "RequestName": "Test_Request",
-  // Name of application which send query for simplify finding in mongodb collection
   "Application": "TestApp",
-  // User name which send query
   "UserName": "TestUser",
-  // Result of carring query
   "Rows": [
-
   ],
-  // Query completion date
   "CreateDate": {
     "$date": "2025-01-01T01:01:01.001Z"
   }
 }
 ```
+- Request - Query which was caried
+- Parameters - Parameters for query
+- RequestName - Name of query for simplify finding in mongodb collection
+- Application - Name of application which send query for simplify finding in mongodb collection
+- UserName - User name which send query
+- Rows - Result of carring query
+- CreateDate - Query completion date
 
 ### Example of bash script for creating container
 
