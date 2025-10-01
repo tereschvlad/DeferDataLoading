@@ -20,23 +20,23 @@ Complex or long‑running queries can block your application and tie up resource
 Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 ``` json
 {
-	// Query which should be carried in DB
 	"Request":"select * from test_table where id = @id", 
-	// Parameters for query
 	"Parameters":
 	[
 		{"id", 12}
 	],
-	// Name of query for simplify finding in mongodb collection
 	"RequestName":"Test_Request",
-	// Name of application which send query for simplify finding in mongodb collection
 	"Application":"TestApp",
-	// User name which send query
 	"UserName":"TestUser",
-	// Name of mongodb collection where will be saved result
 	"MongoCollectionName":"example_collection"
 }
 ```
+- Request - Query which should be carried in DB
+- Parameters - Parameters for query
+- RequestName - Name of query for simplify finding in mongodb collection
+- Application - Name of application which send query for simplify finding in mongodb collection
+- UserName - User name which send query
+- MongoCollectionName - Name of mongodb collection where will be saved result
 
 ## Example of data result in MongoDb
 ``` json
