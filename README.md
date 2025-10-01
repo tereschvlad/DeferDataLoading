@@ -23,7 +23,7 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 	"Request":"select * from test_table where id = @id", 
 	"Parameters":
 	[
-		{"id", 12}
+		{"id": 12}
 	],
 	"RequestName":"Test_Request",
 	"Application":"TestApp",
