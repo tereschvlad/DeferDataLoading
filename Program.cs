@@ -52,7 +52,7 @@ try
         services.AddSingleton<IMongoDatabase>(serviceProvider =>
         {
             var client = new MongoClient(config.MongoDbConnection);
-            return client.GetDatabase(config.MongoDbName);
+            return client.GetDatabase(config.MongoDbCollection);
         });
 
         services.AddSerilog((serviceProv, logConf) =>

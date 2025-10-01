@@ -8,7 +8,7 @@ internal class ConnectionDataOption
 
     public string MongoDbConnection { get; set; }
 
-    public string MongoDbName { get; set; }
+    public string MongoDbCollection { get; set; }
 
     public string QueueName { get; set; }
 
