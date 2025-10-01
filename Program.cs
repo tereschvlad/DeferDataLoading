@@ -33,16 +33,16 @@ try
 
         switch (config.DbName)
         {
-            case "postgree":
+            case "PostgeSql":
                 services.AddSingleton<IDbReaderService, PotgreeReaderService>();
                 break;
-            case "mysql":
+            case "MySql":
                 services.AddSingleton<IDbReaderService, MySqlReaderService>();
                 break;
-            case "oracle":
+            case "Oracle":
                 services.AddSingleton<IDbReaderService, OracleReaderService>();
                 break;
-            case "mssql":
+            case "MSSQL":
                 services.AddSingleton<IDbReaderService, MSSqlReaderService>();
                 break;
         }
