@@ -64,6 +64,6 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 }
 ```
 
-### More information how work with it you can see there [Link for dockerhub](https://hub.docker.com/r/vladteresch/deferdataloading) 
+### More information how work with it you can see there [dockerhub](https://hub.docker.com/r/vladteresch/deferdataloading) 
 
 
