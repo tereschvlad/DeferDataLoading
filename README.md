@@ -65,15 +65,18 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 ### Example of bash script for creating container
 
 ``` bash
+# (optional) create a shared network for your stack
+docker network create app-net
+
 docker run -d \
-  --name test-network \
-  --network test-network \
+  --name deferdataloading \
+  --network app-net \
   --restart unless-stopped \
-  -e Connections__DbName=postgree \
-  -e "Connections__DbConnection=Host=my_potree;Database=mydatabase;Username=test_user;Password=test_password" \
-  -e "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017/" \
+  -e Connections__DbName=PostgreSql \
+  -e "Connections__DbConnection=Host=postgres;Database=mydatabase;Username=test_user;Password=test_password" \
+  -e "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017" \
   -e Connections__MongoDbName=MongoDb_collection_name \
-  -e Connections__RabbitMqHostName=my_rabbitmq \
+  -e Connections__RabbitMqHostName=rabbitmq \
   -e Connections__RabbitMqPort=5672 \
   -e Connections__RabbitMqUser=test \
   -e Connections__RabbitMqPassword=test \
@@ -84,7 +87,7 @@ docker run -d \
   vladteresch/deferdataloading:latest
 ```
 
-- Connections__DbName - name of database which you connect (exist variants: postgree, mysql, oracle, mssql)
+- Connections__DbName - name of database which you connect (exist variants: PostgeSql, MySql, Oracle, MSSQL)
 - Connections__DbConnection - connection string for database
 - Connections__MongoDbConnection - connection string for mongodb
 - Connections__MongoDbName - comgodb collection name
