@@ -20,7 +20,7 @@ Complex or long‑running queries can block your application and tie up resource
 Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 ``` json
 {
-	// Query which sould be carried in DB
+	// Query which should be carried in DB
 	"Request":"select * from test_table where id = @id", 
 	// Parameters for query
 	"Parameters":
@@ -41,7 +41,7 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 ## Example of data result in MongoDb
 ``` json
 {
-  // Query which was carried
+  // Query which was caried
   "Request": "select name, age, salary from test_table",
   // Parameters for query
   "Parameters": {
