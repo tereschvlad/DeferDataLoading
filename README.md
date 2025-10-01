@@ -24,9 +24,9 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 	"Request":"select * from test_table where id = @id", 
 	// Parameters for query
 	"Parameters":
-	{
+	[
 		{"id", 12}
-	},
+	],
 	// Name of query for simplify finding in mongodb collection
 	"RequestName":"Test_Request",
 	// Name of application which send query for simplify finding in mongodb collection
@@ -44,9 +44,9 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
   // Query which was caried
   "Request": "select name, age, salary from test_table",
   // Parameters for query
-  "Parameters": {
+  "Parameters": [
 
-  },
+  ],
   // Name of query for simplify finding in mongodb collection
   "RequestName": "Test_Request",
   // Name of application which send query for simplify finding in mongodb collection
