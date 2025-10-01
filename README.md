@@ -87,18 +87,18 @@ docker run -d \
   vladteresch/deferdataloading:latest
 ```
 
-- Connections__DbName - name of database which you connect (exist variants: PostgeSql, MySql, Oracle, MSSQL)
-- Connections__DbConnection - connection string for database
-- Connections__MongoDbConnection - connection string for mongodb
-- Connections__MongoDbName - comgodb collection name
-- Connections__RabbitMqHostName - rabbitmq host name
-- Connections__RabbitMqPort - rabbitmq port
-- Connections__RabbitMqUser - rabbitmq user name
-- Connections__RabbitMqPassword - rabbitmq user password
-- Connections__QueueName - rabbitmq queue name for saving data for queries
+- Connections__DbName - target DB engine (PostgreSql  MySql | Oracle | SqlServer)
+- Connections__DbConnection - connection string for selected DB
+- Connections__MongoDbConnection - MongoDB connection string
+- Connections__MongoDbName - MongoDB collection/database name
+- Connections__RabbitMqHostName - RabbitMQ host name
+- Connections__RabbitMqPort - RabbitMQ port
+- Connections__RabbitMqUser - RabbitMQ user name
+- Connections__RabbitMqPassword - RabbitMQ user password
+- Connections__QueueName - queue name for query requests
 - Connections__SeqKey - seq authorize key
 - Connections__SeqHost - seq connection
-- Connections__WorkerDelayed - variable of delay for worker how offen it will restarting (in seconds)
+- Connections__WorkerDelayed - worker delay in seconds (how often it polls)
 - test-network - network need for connecting with others containers
 
 ### More information how work with it you can see there [dockerhub](https://hub.docker.com/r/vladteresch/deferdataloading) 
