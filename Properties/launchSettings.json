@@ -13,7 +13,8 @@
         "Connections__RabbitMqUserName": "test",
         "Connections__RabbitMqPassword": "test",
         "Connections__SeqKey": "3UQijf9hnD8Apq5KsXJb",
-        "Connections__SeqHost": "http://localhost:5341"
+        "Connections__SeqHost": "http://localhost:5341",
+        "Connections__WorkerDelayed": "180"
       },
       "remoteDebugEnabled": true
     },

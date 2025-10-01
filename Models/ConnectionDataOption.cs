@@ -24,4 +24,6 @@ internal class ConnectionDataOption
 
     public string SeqHost { get; set; }
 
+    public int WorkerDelayed { get; set; }
+
 }

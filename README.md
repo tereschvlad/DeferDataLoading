@@ -1,16 +1,23 @@
 # DeferDataLoading
 
-Defering the execution of the Db query using RabbitMq for saving and performing queries and using mongodb for saving the result. 
+DeferDataLoading is a small worker service that defers execution of database queries using RabbitMQ and persists the results to MongoDB. You publish a message to a queue with the SQL (plus parameters); the worker reads it, runs the query against the configured database engine, and stores the result set in a MongoDB collection. Logs can be shipped to Seq.
 
-DeferDataLoading it is only application which works with other services as RabbitMq, MongoDb and some types of databases as Oracle, PostgreSQL, MySql and MSSQL. The application only read data about query from queue and perform it. After this the result save into mongodb. MongoDb using as storage for saving results. It allows defer performing queries and simplifying working with results. 
+Supports PostgreSQL, MySQL, Oracle, and SQL Server (selected by configuration).
 
-# Why it was created?
-This project was created for simplifying work with diffcult query for db and for unificate proccess of working queries which performed remotely.
+# Why?
+Complex or long‑running queries can block your application and tie up resources. Offloading them to a background worker allows you to:
+- decouple the request/response path,
+- run queries asynchronously or on a schedule,
+- centralize result storage for later retrieval/analysis.
 
-# How it works?
-Need to start not only this application. Need also database (the project support PostgreSQL, Oracle, MSSQL, MySql), MongoDb, RabbitMq and Seq (for work with logs). In rabbitmq should be already exist queues where will be save datas for queries (json type for saving show lower). Also need to have mongodb with collection where will save a result. Also exist opportunity to create several conteiners which will be perform queries for differents databases.
+# How it works
+- Producer (any app) publishes a JSON message to a RabbitMQ queue specifying the query and parameters.
+- Worker (this service) consumes messages, selects the appropriate DB reader based on Connections:DbName, executes the query, and converts rows to BsonDocuments.
+- A ResultRequestDataModel document containing your original request metadata and the returned rows is written to MongoDB.
+- The worker runs continuously; a Quartz job triggers reads roughly every 120 seconds by default, also have variable for worker delay WorkerDelayed.
 
-## Example of data for RabbitMq 
+## Example of message format for RabbitMq (queue payload)
+Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 ``` json
 {
 	// Query which sould be carried in DB
@@ -77,6 +84,7 @@ services:
       - Connections__QueueName=example_rabbitmq_queue
       - Connections__SeqKey=example_seqkey
       - "Connections__SeqHost=http://seq:5341"
+      - Connections__WorkerDelayed=180
 
 networks:
   test-network:
@@ -101,6 +109,7 @@ docker run -d \
   -e Connections__QueueName=example_rabbitmq_queue \
   -e Connections__SeqKey=example_seqkey \
   -e Connections__SeqHost=http://seq:5341 \
+  -e Connections__WorkerDelayed=180 \
   vladteresch/deferdataloading:latest
 ```
 

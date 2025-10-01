@@ -22,11 +22,14 @@ try
 
     Log.Information("Start hosting");
 
+    var workerDelay = 120; // default 120 seconds
+
     var builder = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
     {
         services.Configure<ConnectionDataOption>(context.Configuration.GetSection("Connections"));
 
         var config = context.Configuration.GetSection("Connections").Get<ConnectionDataOption>();
+        workerDelay = config.WorkerDelayed;
 
         switch (config.DbName)
         {
@@ -75,7 +78,7 @@ try
 
     var trigger = TriggerBuilder.Create()
     .StartNow()
-    .WithSimpleSchedule(x => x.WithIntervalInSeconds(10).RepeatForever()).Build();
+    .WithSimpleSchedule(x => x.WithIntervalInSeconds(workerDelay).RepeatForever()).Build();
 
     await scheduler.ScheduleJob(job, trigger);
 
