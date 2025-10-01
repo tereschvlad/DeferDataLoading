@@ -64,6 +64,42 @@ Send a UTF‑8 JSON object to the queue named by Connections__QueueName:
 }
 ```
 
+### Example of bash script for creating container
+
+``` bash
+docker run -d \
+  --name test-network \
+  --network test-network \
+  --restart unless-stopped \
+  -e Connections__DbName=postgree \
+  -e "Connections__DbConnection=Host=my_potree;Database=mydatabase;Username=test_user;Password=test_password" \
+  -e "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017/" \
+  -e Connections__MongoDbName=MongoDb_collection_name \
+  -e Connections__RabbitMqHostName=my_rabbitmq \
+  -e Connections__RabbitMqPort=5672 \
+  -e Connections__RabbitMqUser=test \
+  -e Connections__RabbitMqPassword=test \
+  -e Connections__QueueName=example_rabbitmq_queue \
+  -e Connections__SeqKey=example_seqkey \
+  -e Connections__SeqHost=http://seq:5341 \
+  -e Connections__WorkerDelayed=180 \
+  vladteresch/deferdataloading:latest
+```
+
+- Connections__DbName - name of database which you connect (exist variants: postgree, mysql, oracle, mssql)
+- Connections__DbConnection - connection string for database
+- Connections__MongoDbConnection - connection string for mongodb
+- Connections__MongoDbName - comgodb collection name
+- Connections__RabbitMqHostName - rabbitmq host name
+- Connections__RabbitMqPort - rabbitmq port
+- Connections__RabbitMqUser - rabbitmq user name
+- Connections__RabbitMqPassword - rabbitmq user password
+- Connections__QueueName - rabbitmq queue name for saving data for queries
+- Connections__SeqKey - seq authorize key
+- Connections__SeqHost - seq connection
+- Connections__WorkerDelayed - variable of delay for worker how offen it will restarting (in seconds)
+- test-network - network need for connecting with others containers
+
 ### More information how work with it you can see there [dockerhub](https://hub.docker.com/r/vladteresch/deferdataloading) 
 
 
