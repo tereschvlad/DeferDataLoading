@@ -3,21 +3,22 @@ services:
     container_name: container-name
     image: vladteresch/deferdataloading:latest
     networks:
-      - test-network
+      - app-net
     environment:
-      - Connections__DbName=postgree
-      - "Connections__DbConnection=Host=my_potree;Database=mydatabase;Username=test_user;Password=test_password"
-      - "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017/"
-      - Connections__MongoDbName=MongoDb_collection_name
-      - Connections__RabbitMqHostName=my_rabbitmq
+      - Connections__DbName=PostgreSql
+      - "Connections__DbConnection=Host=postgres;Database=mydatabase;Username=test_user;Password=test_password"
+      - "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017"
+      - Connections__MongoDbCollection=MongoDb_collection_name
+      - Connections__RabbitMqHostName=rabbitmq
       - Connections__RabbitMqPort=5672
       - Connections__RabbitMqUser=test
       - Connections__RabbitMqPassword=test
       - Connections__QueueName=example_rabbitmq_queue
       - Connections__SeqKey=example_seqkey
       - "Connections__SeqHost=http://seq:5341"
+      - Connections__WorkerDelayed=180
 
 networks:
   test-network:
     external: true
-    name: test-network   
+    name: app-net   
