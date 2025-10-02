@@ -76,7 +76,7 @@ docker run -d \
   -e Connections__DbName=PostgreSql \
   -e "Connections__DbConnection=Host=postgres;Database=mydatabase;Username=test_user;Password=test_password" \
   -e "Connections__MongoDbConnection=mongodb://test:test@mongodb:27017" \
-  -e Connections__MongoDbCollection=MongoDb_collection_name \
+  -e Connections__MongoDbName=MongoDb_collection_name \
   -e Connections__RabbitMqHostName=rabbitmq \
   -e Connections__RabbitMqPort=5672 \
   -e Connections__RabbitMqUser=test \
@@ -91,7 +91,7 @@ docker run -d \
 - Connections__DbName - target DB engine (PostgreSql  MySql | Oracle | SqlServer)
 - Connections__DbConnection - connection string for selected DB
 - Connections__MongoDbConnection - MongoDB connection string
-- Connections__MongoDbCollection - MongoDB collection name
+- Connections__MongoDbName - MongoDB collection name
 - Connections__RabbitMqHostName - RabbitMQ host name
 - Connections__RabbitMqPort - RabbitMQ port
 - Connections__RabbitMqUser - RabbitMQ user name
