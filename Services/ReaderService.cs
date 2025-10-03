@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using RabbitMQ.Client;
-using Serilog;
 
 namespace DeferDataLoading;
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quartz;
-using System.Text.Json;
 
 namespace DeferDataLoading;
 
