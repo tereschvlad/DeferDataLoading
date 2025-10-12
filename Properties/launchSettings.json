@@ -3,7 +3,7 @@
     "DelayedDataLoading": {
       "commandName": "Project",
       "environmentVariables": {
-        "Connections__DbName": "postgree",
+        "Connections__DbName": "PostgreSql",
         "Connections__DbConnection": "Server=localhost;Port=5432;Database=mydatabase;User Id=test;Password=1234;",
         "Connections__MongoDbConnection": "mongodb://test:test@localhost:27017/",
         "Connections__MongoDbCollection": "DelayedDataLoading",

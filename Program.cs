@@ -58,6 +58,8 @@ try
         services.AddSerilog((serviceProv, logConf) =>
         {
             logConf.WriteTo.Console()
+                   .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day, 
+                                restrictedToMinimumLevel: LogEventLevel.Information)
                    .WriteTo.Seq(config.SeqHost, apiKey: config.SeqKey, 
                                 restrictedToMinimumLevel: LogEventLevel.Information);
         });
